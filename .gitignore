@@ -1,0 +1,26 @@
+# Python
+
+**pycache**/
+*.pyc
+*.pyo
+
+# Environment
+
+.env
+
+# Virtual env
+
+venv/
+env/
+
+# Streamlit cache
+
+.streamlit/
+
+# Data files (optional if large)
+
+data/raw_data.json
+
+# OS
+
+.DS_Store
