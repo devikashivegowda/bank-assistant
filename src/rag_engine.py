@@ -43,31 +43,76 @@ class LoanAssistantRAG:
         self.index = faiss.IndexFlatL2(embeddings.shape[1])
         self.index.add(np.array(embeddings).astype('float32'))
 
-    def retrieve(self, query, k=3):
-        """Retrieves the top k relevant chunks for a given query."""
+    def retrieve(self, query, k=5):
         query_vector = self.embed_model.encode([query])
         _, indices = self.index.search(np.array(query_vector).astype('float32'), k)
-        return "\n".join([self.chunks[i] for i in indices[0]])
+
+        query_lower = query.lower()
+        results = []
+
+        for i in indices[0]:
+            chunk = self.chunks[i]
+
+            if "interest" in query_lower and "INTEREST_RATE" in chunk:
+                results.append(chunk)
+            elif "tenure" in query_lower and "TENURE" in chunk:
+                results.append(chunk)
+            elif "eligibility" in query_lower and "ELIGIBILITY" in chunk:
+                results.append(chunk)
+            else:
+                results.append(chunk)
+
+        return "\n".join(results[:3])
 
     def query(self, user_input):
-        """Generates an answer based on retrieved context."""
-        try:
-            context = self.retrieve(user_input)
-            
-            prompt = f"Use the context to answer: {user_input}\n\nCONTEXT:\n{context}"
-            
-            completion = self.client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
-                messages=[
-                    {"role": "system", "content": "You are a Bank of Maharashtra Assistant. Use ONLY provided context."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0
-            )
-            return completion.choices[0].message.content
-        except Exception as e:
-            logger.error(f"Query generation failed: {e}")
-            return "I encountered an error processing your request."
+        context = self.retrieve(user_input)
+        
+        # NEW: More flexible but still safe prompt
+        system_prompt = f"""
+        You are a professional Bank of Maharashtra Loan Assistant.
+
+        Your job is to provide DETAILED, structured, and helpful explanations.
+
+        IMPORTANT RULES:
+        start with a short introduction then give detailed explanation
+        1. Always elaborate the answer clearly.
+        2. Use bullet points or numbered format where possible.
+        3. Explain each factor in simple terms.
+        4. If eligibility is asked:
+        - Explain criteria
+        - Mention different categories (salaried, self-employed, etc.)
+        5. Do NOT give short answers.
+        6. Do NOT say "not mentioned" or "refer to website".
+        7. Keep answers user-friendly and professional.
+
+        CONTEXT:
+        {context}
+        """
+    
+        completion = self.client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {
+                    "role": "user",
+                    "content": f"Explain in detail: {user_input}"
+                }
+            ],
+            temperature=0.2
+        )
+
+        # 👉 Extract answer
+        answer = completion.choices[0].message.content
+        if "click" in answer.lower() or "visit" in answer.lower():
+            answer = "Bank of Maharashtra offers competitive home loan interest rates. These rates vary depending on factors like loan amount, tenure, and applicant profile. The bank also provides benefits such as flexible repayment options and concessions for certain categories of borrowers."
+
+
+        # 👉 Fix bad responses (fallback logic)
+        if "not explicitly" in answer.lower() or "not mentioned" in answer.lower():
+            answer = "Bank of Maharashtra offers competitive home loan interest rates. The exact rate varies depending on applicant profile and loan type. You can check the official website for the latest rates."
+
+        return answer    
 
 def setup_rag_chain():
     return LoanAssistantRAG()
+

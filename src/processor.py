@@ -1,5 +1,6 @@
 import json
 import os
+from pydoc import text
 import re
 
 class DataProcessor:
@@ -9,7 +10,6 @@ class DataProcessor:
 
     def clean_text(self, text):
         """Advanced cleaning: removes headers, footer noise, and extra whitespace."""
-        # Remove common website navigation/header noise
         noise_patterns = [
             r"Home\s*>\s*Personal\s*>\s*Loans", 
             r"Copyright ©.*All rights reserved",
@@ -20,6 +20,8 @@ class DataProcessor:
             text = re.sub(pattern, "", text, flags=re.IGNORECASE)
         
         text = re.sub(r'\s+', ' ', text)
+        if "click here" in text.lower() or "visit" in text.lower():
+            return ""
         return text.strip()
 
     def extract_structured_fields(self, text):
@@ -53,10 +55,12 @@ class DataProcessor:
             cleaned_blocks = []
             for block in content_list:
                 cleaned = self.clean_text(block)
-                if len(cleaned) > 40 and cleaned not in seen_content:
+                if len(cleaned) > 40 and cleaned not in seen_content and is_useful_content(cleaned):
                     # 2. Tag with Structured Fields for better RAG retrieval
                     tags = self.extract_structured_fields(cleaned)
-                    cleaned_blocks.append(f"{tags} {cleaned}")
+                    product = page.get('title', 'Unknown Loan')
+                    for tag in tags.split():
+                        cleaned_blocks.append(f"PRODUCT: {product} | TYPE: {tag} | DATA: {cleaned}")
                     seen_content.add(cleaned)
 
             if cleaned_blocks:
@@ -68,6 +72,10 @@ class DataProcessor:
             f.write("\n\n".join(consolidated_content))
             
         print(f"Success! Deduplicated and Structured data saved to {self.processed_path}")
+
+    def is_useful_content(text):
+        keywords = ["interest", "rate", "tenure", "eligibility", "loan", "roi"]
+        return any(k in text.lower() for k in keywords) and len(text) < 300
 
 if __name__ == "__main__":
     processor = DataProcessor()

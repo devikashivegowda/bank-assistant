@@ -197,6 +197,10 @@ streamlit run app.py
 
 ---
 
+#### LIVE DEMO 
+ 
+🔗 https://bank-assistant-bdcxjy5wtyrmructuzmwdr.streamlit.app/
+
 ## 💬 Features
 
 * ✅ Chat-based UI (Streamlit)

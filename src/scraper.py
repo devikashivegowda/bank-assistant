@@ -29,7 +29,7 @@ def scrape_loan_page(url):
         # Extracting meaningful text blocks (Headers and Paragraphs)
         for element in main_content.find_all(['h1', 'h2', 'h3', 'p', 'li']):
             text = element.get_text(strip=True)
-            if text and len(text) > 20:  # Ignore tiny fragments or nav links
+            if text and len(text) > 20:  
                 data["content"].append(text)
         
         return data
