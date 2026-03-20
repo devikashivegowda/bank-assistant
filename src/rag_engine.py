@@ -67,7 +67,6 @@ class LoanAssistantRAG:
     def query(self, user_input):
         context = self.retrieve(user_input)
         
-        # NEW: More flexible but still safe prompt
         system_prompt = f"""
         You are a professional Bank of Maharashtra Loan Assistant.
 
@@ -107,7 +106,7 @@ class LoanAssistantRAG:
             answer = "Bank of Maharashtra offers competitive home loan interest rates. These rates vary depending on factors like loan amount, tenure, and applicant profile. The bank also provides benefits such as flexible repayment options and concessions for certain categories of borrowers."
 
 
-        # 👉 Fix bad responses (fallback logic)
+        # 👉 Fixes bad responses (fallback logic)
         if "not explicitly" in answer.lower() or "not mentioned" in answer.lower():
             answer = "Bank of Maharashtra offers competitive home loan interest rates. The exact rate varies depending on applicant profile and loan type. You can check the official website for the latest rates."
 

@@ -1,6 +1,6 @@
 # 🏦 Bank of Maharashtra Loan Product Assistant (RAG-Based AI System)
 
-## 🚀 Project Overview
+##  Project Overview
 
 This project is a **Retrieval-Augmented Generation (RAG) based AI assistant** designed to answer user queries specifically about **Bank of Maharashtra loan products**.
 
@@ -14,7 +14,7 @@ The goal is to build a reliable, domain-specific AI assistant that reduces manua
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 To develop a system that can accurately answer queries such as:
 
@@ -25,7 +25,7 @@ To develop a system that can accurately answer queries such as:
 
 ---
 
-## 🧠 System Architecture
+##  System Architecture
 
 ```
 User Query
@@ -43,7 +43,7 @@ Final Answer (Grounded Response)
 
 ---
 
-## ⚙️ Tech Stack
+##  Tech Stack
 
 | Component       | Technology Used               |
 | --------------- | ----------------------------- |
@@ -57,7 +57,7 @@ Final Answer (Grounded Response)
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 loan-assistant/
@@ -78,7 +78,7 @@ loan-assistant/
 
 ---
 
-## 🌐 Data Collection (Scraping)
+##  Data Collection (Scraping)
 
 * Data is scraped **only from the official Bank of Maharashtra website**
 * Focus areas include:
@@ -97,7 +97,7 @@ loan-assistant/
 
 ---
 
-## 🧹 Data Processing
+##  Data Processing
 
 The raw scraped data is cleaned and transformed into a **high-quality knowledge base**.
 
@@ -112,7 +112,7 @@ The raw scraped data is cleaned and transformed into a **high-quality knowledge 
   * `[TENURE]`
   * `[ELIGIBILITY]`
 
-👉 This improves retrieval accuracy significantly.
+--> This improves retrieval accuracy significantly.
 
 ---
 
@@ -137,7 +137,7 @@ The raw scraped data is cleaned and transformed into a **high-quality knowledge 
 
 ---
 
-## 🤖 Prompt Design
+##  Prompt Design
 
 The system enforces:
 
@@ -147,12 +147,12 @@ The system enforces:
 
 ---
 
-## 💻 Running the Project
+##  Running the Project
 
 ### 1. Clone Repository
 
 ```
-git clone <your-repo-link>
+git clone "https://github.com/devikashivegowda/bank-assistant"
 cd loan-assistant
 ```
 
@@ -198,21 +198,22 @@ streamlit run app.py
 ---
 
 #### LIVE DEMO 
- 
+
+"Click here to access the product which is launched on stremlit.cloud" 
 🔗 https://bank-assistant-bdcxjy5wtyrmructuzmwdr.streamlit.app/
 
-## 💬 Features
+##  Features
 
-* ✅ Chat-based UI (Streamlit)
-* ✅ Context-aware answers
-* ✅ Domain-restricted responses
-* ✅ Downloadable chat history
-* ✅ Fast retrieval using FAISS
-* ✅ Clean and structured knowledge base
+*  Chat-based UI (Streamlit)
+*  Context-aware answers
+*  Domain-restricted responses
+*  Downloadable chat history
+*  Fast retrieval using FAISS
+*  Clean and structured knowledge base
 
 ---
 
-## ⚠️ Challenges Faced
+##  Challenges Faced
 
 ### 1. Noisy Web Data
 
@@ -236,7 +237,7 @@ streamlit run app.py
 
 ---
 
-## 🚀 Potential Improvements
+##  Potential Improvements
 
 * Use advanced vector DB (Pinecone / Weaviate)
 * Add source citations in responses
@@ -247,13 +248,13 @@ streamlit run app.py
 
 ---
 
-## 🎥 Video Walkthrough
+##  Video Walkthrough
 
 (Insert your Loom / Drive link here)
 
 ---
 
-## 📊 Evaluation Alignment
+##  Evaluation Alignment
 
 This project satisfies all requirements:
 
@@ -265,7 +266,7 @@ This project satisfies all requirements:
 
 ---
 
-## 🧠 Key Learnings
+##  Key Learnings
 
 * Practical implementation of RAG systems
 * Importance of data quality in AI pipelines
@@ -275,7 +276,7 @@ This project satisfies all requirements:
 
 ---
 
-## 🙌 Conclusion
+##  Conclusion
 
 This project demonstrates the ability to:
 
@@ -286,7 +287,7 @@ This project demonstrates the ability to:
 
 ---
 
-## 📌 Author
+##  Author
 
 Devika S 
 devikashivegowda@gmail.com

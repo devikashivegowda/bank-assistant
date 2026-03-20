@@ -17,7 +17,7 @@ st.markdown("""
     """, unsafe_allow_html=True) # Corrected parameter
 
 st.title("🏦 Bank of Maharashtra Loan Assistant")
-st.subheader("Your AI-powered guide to Retail, MSME, and Agri Loans")
+st.subheader("Your AI-powered guide to every loan products")
 
 # --- Initialize the RAG Chain ---
 # We use @st.cache_resource so the vector store and LLM load only once
